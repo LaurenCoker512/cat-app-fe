@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -14,11 +14,7 @@ interface Cat {
 }
 
 const LandingPage = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState({
-    name: "Cat Lover",
-    avatar: "https://placekitten.com/200/200",
-  });
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   // Dummy data for cats
@@ -43,26 +39,21 @@ const LandingPage = () => {
     },
   ];
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    navigate("/dashboard");
-  };
-
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    logout();
     navigate("/");
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-cream-white">
       <Header
-        isLoggedIn={isLoggedIn}
-        user={isLoggedIn ? user : undefined}
+        isLoggedIn={!!user}
+        user={user ? { name: user.name, avatar: "https://placekitten.com/200/200" } : undefined}
         onLogout={handleLogout}
       />
 
       <main className="flex-grow">
-        {isLoggedIn ? (
+        {!!user ? (
           // Logged-in state - Dashboard
           <div className="container mx-auto px-4 py-8">
             <div className="mb-8">

@@ -9,8 +9,13 @@ import type {
 } from "./types";
 
 const users: User[] = [
-  { id: 1, name: "John Doe", email: "john@example.com" },
-  { id: 2, name: "Jane Smith", email: "jane@example.com" },
+  { id: 1, name: "John Doe", email: "john@example.com", password: "cat123" },
+  {
+    id: 2,
+    name: "Jane Smith",
+    email: "jane@example.com",
+    password: "meowmeow",
+  },
 ];
 
 const cats: Cat[] = [
@@ -96,11 +101,14 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export const mockApi = {
   async login(email: string, password: string): Promise<AuthResponse> {
     await delay(500);
-    const user = users.find((u) => u.email === email);
-    if (!user || password !== "password") {
+    const user = users.find(
+      (u) => u.email === email && u.password === password
+    );
+    if (!user) {
       throw { message: "Invalid credentials", status: 401 } as ApiError;
     }
-    return { token: "mock-token", user };
+    const { password: _pw, ...userWithoutPassword } = user;
+    return { token: "mock-token", user: userWithoutPassword };
   },
 
   async getUser(id: number): Promise<User> {

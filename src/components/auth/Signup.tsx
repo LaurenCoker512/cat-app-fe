@@ -1,10 +1,13 @@
 // src/components/auth/Signup.tsx
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { api } from "../../api";
 import { useAuth } from "../../context/AuthContext";
 import type { AuthFormData } from "../../types/auth";
 import { Link } from "react-router-dom";
 
 export default function Signup() {
+  const navigate = useNavigate();
   const { signup } = useAuth();
   const [formData, setFormData] = useState<AuthFormData>({
     name: "",
@@ -23,14 +26,15 @@ export default function Signup() {
     e.preventDefault();
     setError(null);
     setLoading(true);
-
     try {
       const response = await signup(formData);
-      if (!response.success) {
+      if (response.success) {
+        navigate("/");
+      } else {
         setError(response.message || "Signup failed");
       }
-    } catch (err) {
-      setError("An unexpected error occurred");
+    } catch (err: any) {
+      setError(err?.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -167,6 +171,7 @@ export default function Signup() {
               <button
                 type="submit"
                 disabled={loading}
+                onClick={handleSubmit}
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? "Creating account..." : "Create account"}
