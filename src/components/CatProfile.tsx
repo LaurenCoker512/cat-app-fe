@@ -83,9 +83,14 @@ const CatProfilePage = () => {
 
   if (!cat) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <main
+        className="min-h-screen flex items-center justify-center"
+        aria-live="polite"
+      >
         <div className="text-center p-8">
-          <div className="text-6xl mb-4">😿</div>
+          <div className="text-6xl mb-4" aria-hidden="true">
+            😿
+          </div>
           <h1 className="text-3xl font-bold text-gray-800 mb-4">
             Oops! Cat not found
           </h1>
@@ -94,65 +99,88 @@ const CatProfilePage = () => {
           </p>
           <a
             href="/"
-            className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg transition-colors"
+            className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             Back to Safety
           </a>
         </div>
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <main
+      className="max-w-6xl mx-auto px-4 py-8"
+      id="main-content"
+      tabIndex={-1}
+    >
       {/* Cat Profile Header */}
-      <div className="flex flex-col md:flex-row items-center gap-8 mb-12">
-        <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-indigo-100">
-          <img
-            src={cat.profilePicture}
-            alt={cat.name}
-            className="w-full h-full object-cover"
-          />
-        </div>
-
-        <div className="flex-1">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">{cat.name}</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <p className="text-lg text-gray-600">
-                <span className="font-semibold">Age:</span>{" "}
-                {calculateAge(cat.birthDate)}
-              </p>
-              <p className="text-lg text-gray-600">
-                <span className="font-semibold">Breed:</span> {cat.breed}
-              </p>
-            </div>
-            <div>
-              <p className="text-lg text-gray-600">
-                <span className="font-semibold">Temperament:</span>{" "}
-                {cat.temperament.join(", ")}
-              </p>
+      <section aria-labelledby="cat-profile-header" className="mb-12">
+        <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-indigo-100">
+            <img
+              src={cat.profilePicture}
+              alt={`Profile of ${cat.name}`}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="flex-1">
+            <h1
+              id="cat-profile-header"
+              className="text-4xl font-bold text-gray-800 mb-2"
+              tabIndex={0}
+            >
+              {cat.name}
+            </h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-lg text-gray-700">
+                  <span className="font-semibold">Age:</span>{" "}
+                  {calculateAge(cat.birthDate)}
+                </p>
+                <p className="text-lg text-gray-700">
+                  <span className="font-semibold">Breed:</span> {cat.breed}
+                </p>
+              </div>
+              <div>
+                <p className="text-lg text-gray-700">
+                  <span className="font-semibold">Temperament:</span>{" "}
+                  {cat.temperament.join(", ")}
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Enrichment Suggestions */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+      <section
+        className="mb-12"
+        aria-labelledby="enrichment-suggestions-header"
+      >
+        <h2
+          id="enrichment-suggestions-header"
+          className="text-2xl font-bold text-gray-800 mb-4"
+          tabIndex={0}
+        >
           Suggested Enrichment Activities
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {enrichmentSuggestions.map((suggestion: EnrichmentSuggestion) => (
             <div
               key={suggestion.id}
-              className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+              className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow border border-gray-200"
+              tabIndex={0}
+              aria-label={`Enrichment suggestion: ${suggestion.name}`}
             >
-              <h3 className="text-xl font-semibold text-indigo-700 mb-2">
+              <h3
+                className="text-xl font-semibold text-indigo-700 mb-2"
+                tabIndex={0}
+              >
                 {suggestion.name}
               </h3>
-              <p className="text-gray-600 mb-3">{suggestion.description}</p>
-              <p className="text-sm text-gray-500 italic">
+              <p className="text-gray-700 mb-3">{suggestion.description}</p>
+              <p className="text-sm text-gray-600 italic">
                 "{suggestion.reason}"
               </p>
             </div>
@@ -161,34 +189,57 @@ const CatProfilePage = () => {
       </section>
 
       {/* Health Logs */}
-      <section className="mb-12">
+      <section className="mb-12" aria-labelledby="health-logs-header">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-gray-800">Health Logs</h2>
+          <h2
+            id="health-logs-header"
+            className="text-2xl font-bold text-gray-800"
+          >
+            Health Logs
+          </h2>
           <button
             onClick={() => setShowHealthLogModal(true)}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition-colors"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            aria-label="Add Health Log"
           >
             Add Health Log
           </button>
         </div>
-
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
+        <div className="bg-white rounded-lg shadow overflow-hidden border border-gray-200">
+          <table
+            className="min-w-full divide-y divide-gray-200"
+            aria-label="Health logs table"
+          >
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                >
                   Date
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                >
                   Litter Box
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                >
                   Energy Level
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                >
                   Skin Condition
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                >
                   Notes
                 </th>
               </tr>
@@ -200,59 +251,73 @@ const CatProfilePage = () => {
                   healthLogsPage * itemsPerPage
                 )
                 .map((log: HealthLog) => (
-                  <tr key={log.id}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <tr
+                    key={log.id}
+                    tabIndex={0}
+                    aria-label={`Health log for ${format(
+                      log.date,
+                      "MMM d, yyyy"
+                    )}`}
+                  >
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                       {format(log.date, "MMM d, yyyy")}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                       {log.litterBoxHabits}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <div className="flex items-center">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                      <div
+                        className="flex items-center"
+                        aria-label={`Energy level: ${log.energyLevel} out of 5`}
+                      >
                         {[...Array(5)].map((_, i) => (
                           <svg
                             key={i}
                             className={`h-4 w-4 ${
                               i < log.energyLevel
-                                ? "text-yellow-400"
+                                ? "text-yellow-500"
                                 : "text-gray-300"
                             }`}
                             fill="currentColor"
                             viewBox="0 0 20 20"
+                            aria-hidden="true"
                           >
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                           </svg>
                         ))}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                       {log.skinCondition}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500 max-w-xs truncate">
+                    <td className="px-6 py-4 text-sm text-gray-700 max-w-xs truncate">
                       {log.notes}
                     </td>
                   </tr>
                 ))}
             </tbody>
           </table>
-
           {/* Pagination */}
-          <div className="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200">
+          <nav
+            className="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200"
+            aria-label="Health logs pagination"
+          >
             <div className="flex-1 flex justify-between items-center">
               <button
                 onClick={() =>
                   setHealthLogsPage(Math.max(1, healthLogsPage - 1))
                 }
                 disabled={healthLogsPage === 1}
-                className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md ${
+                className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                   healthLogsPage === 1
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                     : "bg-white text-gray-700 hover:bg-gray-50"
                 }`}
+                aria-label="Previous page"
               >
                 Previous
               </button>
-              <span className="text-sm text-gray-700">
+              <span className="text-sm text-gray-700" aria-live="polite">
                 Page {healthLogsPage} of{" "}
                 {Math.ceil(healthLogs.length / itemsPerPage)}
               </span>
@@ -268,47 +333,66 @@ const CatProfilePage = () => {
                 disabled={
                   healthLogsPage === Math.ceil(healthLogs.length / itemsPerPage)
                 }
-                className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md ${
+                className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                   healthLogsPage === Math.ceil(healthLogs.length / itemsPerPage)
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                     : "bg-white text-gray-700 hover:bg-gray-50"
                 }`}
+                aria-label="Next page"
               >
                 Next
               </button>
             </div>
-          </div>
+          </nav>
         </div>
       </section>
 
       {/* Enrichment Activities */}
-      <section className="mb-12">
+      <section className="mb-12" aria-labelledby="enrichment-activities-header">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-gray-800">
+          <h2
+            id="enrichment-activities-header"
+            className="text-2xl font-bold text-gray-800"
+          >
             Enrichment Activities
           </h2>
           <button
             onClick={() => setShowEnrichmentModal(true)}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition-colors"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            aria-label="Add Enrichment Activity"
           >
             Add Activity
           </button>
         </div>
-
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
+        <div className="bg-white rounded-lg shadow overflow-hidden border border-gray-200">
+          <table
+            className="min-w-full divide-y divide-gray-200"
+            aria-label="Enrichment activities table"
+          >
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                >
                   Activity
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                >
                   Description
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                >
                   Last Tried
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                >
                   Enjoyment
                 </th>
               </tr>
@@ -320,32 +404,39 @@ const CatProfilePage = () => {
                   activitiesPage * itemsPerPage
                 )
                 .map((activity: EnrichmentActivity) => (
-                  <tr key={activity.id}>
+                  <tr
+                    key={activity.id}
+                    tabIndex={0}
+                    aria-label={`Enrichment activity: ${activity.name}`}
+                  >
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       {activity.name}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500 max-w-xs">
+                    <td className="px-6 py-4 text-sm text-gray-700 max-w-xs">
                       {activity.description}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                       {activity.lastTried
                         ? format(activity.lastTried, "MMM d, yyyy")
                         : "Never"}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                       {activity.enjoymentRating ? (
-                        <div className="flex items-center">
+                        <div
+                          className="flex items-center"
+                          aria-label={`Enjoyment rating: ${activity.enjoymentRating} out of 5`}
+                        >
                           {[...Array(5)].map((_, i) => (
                             <svg
                               key={i}
                               className={`h-4 w-4 ${
-                                // @ts-ignore
-                                i < activity.enjoymentRating
-                                  ? "text-yellow-400"
+                                i < (activity.enjoymentRating ?? 0)
+                                  ? "text-yellow-500"
                                   : "text-gray-300"
                               }`}
                               fill="currentColor"
                               viewBox="0 0 20 20"
+                              aria-hidden="true"
                             >
                               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                             </svg>
@@ -359,24 +450,27 @@ const CatProfilePage = () => {
                 ))}
             </tbody>
           </table>
-
           {/* Pagination */}
-          <div className="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200">
+          <nav
+            className="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200"
+            aria-label="Enrichment activities pagination"
+          >
             <div className="flex-1 flex justify-between items-center">
               <button
                 onClick={() =>
                   setActivitiesPage(Math.max(1, activitiesPage - 1))
                 }
                 disabled={activitiesPage === 1}
-                className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md ${
+                className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                   activitiesPage === 1
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                     : "bg-white text-gray-700 hover:bg-gray-50"
                 }`}
+                aria-label="Previous page"
               >
                 Previous
               </button>
-              <span className="text-sm text-gray-700">
+              <span className="text-sm text-gray-700" aria-live="polite">
                 Page {activitiesPage} of{" "}
                 {Math.ceil(enrichmentActivities.length / itemsPerPage)}
               </span>
@@ -393,17 +487,18 @@ const CatProfilePage = () => {
                   activitiesPage ===
                   Math.ceil(enrichmentActivities.length / itemsPerPage)
                 }
-                className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md ${
+                className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                   activitiesPage ===
                   Math.ceil(enrichmentActivities.length / itemsPerPage)
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                     : "bg-white text-gray-700 hover:bg-gray-50"
                 }`}
+                aria-label="Next page"
               >
                 Next
               </button>
             </div>
-          </div>
+          </nav>
         </div>
       </section>
 
@@ -658,7 +753,7 @@ const CatProfilePage = () => {
           </div>
         </div>
       )}
-    </div>
+    </main>
   );
 };
 
