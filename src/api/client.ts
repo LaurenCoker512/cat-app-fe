@@ -39,6 +39,18 @@ export const apiClient = {
     });
   },
 
+  async signup(data: {
+    name: string;
+    email: string;
+    password: string;
+    passwordConfirmation: string;
+  }): Promise<AuthResponse> {
+    return this.request<AuthResponse>("/auth/signup", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  },
+
   async getUser(id: number): Promise<User> {
     return this.request<User>(`/users/${id}`);
   },

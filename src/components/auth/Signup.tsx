@@ -9,10 +9,11 @@ import { Link } from "react-router-dom";
 export default function Signup() {
   const navigate = useNavigate();
   const { signup } = useAuth();
-  const [formData, setFormData] = useState<AuthFormData>({
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
+    passwordConfirmation: "",
   });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -142,6 +143,27 @@ export default function Signup() {
               <p className="mt-2 text-sm text-gray-500">
                 Use at least 8 characters with a mix of letters and numbers
               </p>
+            </div>
+
+            <div>
+              <label
+                htmlFor="passwordConfirmation"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Confirm Password
+              </label>
+              <div className="mt-1">
+                <input
+                  id="passwordConfirmation"
+                  name="passwordConfirmation"
+                  type="password"
+                  autoComplete="new-password"
+                  required
+                  value={formData.passwordConfirmation}
+                  onChange={handleChange}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
             </div>
 
             <div className="flex items-center">

@@ -111,6 +111,29 @@ export const mockApi = {
     return { token: "mock-token", user: userWithoutPassword };
   },
 
+  async signup(data: {
+    name: string;
+    email: string;
+    password: string;
+    passwordConfirmation: string;
+  }) {
+    await delay(500);
+    const { name, email, password, passwordConfirmation } = data;
+    if (!name || !email || !password || !passwordConfirmation) {
+      throw { message: "All fields are required", status: 400 };
+    }
+    if (password !== passwordConfirmation) {
+      throw { message: "Passwords do not match", status: 400 };
+    }
+    if (users.find((u) => u.email === email)) {
+      throw { message: "Email already registered", status: 409 };
+    }
+    const newUser = { id: users.length + 1, name, email, password };
+    users.push(newUser);
+    const { password: _pw, ...userWithoutPassword } = newUser;
+    return { token: "mock-token", user: userWithoutPassword };
+  },
+
   async getUser(id: number): Promise<User> {
     await delay(300);
     const user = users.find((u) => u.id === id);

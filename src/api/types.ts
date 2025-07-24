@@ -41,6 +41,14 @@ export interface EnrichmentSuggestion {
 export interface AuthResponse {
   token: string;
   user: User;
+  message?: string;
+}
+
+export interface SignupRequest {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirmation: string;
 }
 
 export interface ApiError {

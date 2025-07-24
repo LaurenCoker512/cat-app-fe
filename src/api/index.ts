@@ -7,16 +7,17 @@ import type {
   HealthLog,
   EnrichmentActivity,
   EnrichmentSuggestion,
+  SignupRequest,
 } from "./types";
 
 export interface ApiService {
   login(email: string, password: string): Promise<AuthResponse>;
+  signup(data: SignupRequest): Promise<AuthResponse>;
   getUser(id: number): Promise<User>;
   updateUser(id: number, updates: Partial<User>): Promise<User>;
   getCat(id: number): Promise<Cat>;
   updateCat(id: number, updates: Partial<Cat>): Promise<Cat>;
 
-  // New methods
   getHealthLogs(catId: number): Promise<HealthLog[]>;
   addHealthLog(catId: number, log: Omit<HealthLog, "id">): Promise<HealthLog>;
 

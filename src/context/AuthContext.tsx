@@ -6,7 +6,9 @@ interface AuthContextType {
   user: null | { email: string; name: string };
   token: string | null;
   login: (data: AuthFormData) => Promise<AuthResponse>;
-  signup: (data: AuthFormData) => Promise<AuthResponse>;
+  signup: (
+    data: AuthFormData & { passwordConfirmation: string }
+  ) => Promise<AuthResponse>;
   logout: () => void;
 }
 
@@ -60,12 +62,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const signup = async (data: AuthFormData): Promise<AuthResponse> => {
+  const signup = async (
+    data: AuthFormData & { passwordConfirmation: string }
+  ): Promise<AuthResponse> => {
     try {
-      // Call your backend or mock API here
-      // For demo, use login as a placeholder
       const response = await import("../api").then((mod) =>
-        mod.api.login(data.email, data.password)
+        mod.api.signup({
+          name: data.name || "",
+          email: data.email,
+          password: data.password,
+          passwordConfirmation: data.passwordConfirmation,
+        })
       );
       if (response.token && response.user) {
         setUser({ email: response.user.email, name: response.user.name });
@@ -78,7 +85,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           token: response.token,
         };
       } else {
-        return { success: false, message: "Signup failed" };
+        return { success: false, message: response.message || "Signup failed" };
       }
     } catch (error: any) {
       return { success: false, message: error?.message || "Signup failed" };

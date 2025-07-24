@@ -70,27 +70,39 @@ const Header = ({ isLoggedIn, user, onLogout }: HeaderProps) => {
                 Activities
               </Link>
               <div className="relative group">
-                <button className="flex items-center space-x-1 focus:outline-none">
+                <button
+                  className="flex items-center space-x-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-dusty-coral rounded-md"
+                  id="user-menu-button"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-controls="user-menu"
+                  tabIndex={0}
+                  type="button"
+                >
                   {user?.avatar ? (
                     <img
                       src={user.avatar}
-                      alt={user.name}
+                      alt={user.name + " avatar"}
                       className="w-8 h-8 rounded-full"
                     />
                   ) : (
-                    <div className="w-8 h-8 rounded-full bg-indigo-300 flex items-center justify-center">
-                      <span className="text-sm font-medium">
+                    <div className="w-8 h-8 rounded-full bg-indigo-700 flex items-center justify-center">
+                      <span className="text-sm font-medium text-white">
                         {user?.name.charAt(0).toUpperCase()}
                       </span>
                     </div>
                   )}
+                  <span className="sr-only">
+                    Open user menu for {user?.name}
+                  </span>
                   <span className="font-medium">{user?.name}</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
+                    className="h-4 w-4 text-white"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    aria-hidden="true"
                   >
                     <path
                       strokeLinecap="round"
@@ -100,22 +112,33 @@ const Header = ({ isLoggedIn, user, onLogout }: HeaderProps) => {
                     />
                   </svg>
                 </button>
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden group-hover:block">
+                <div
+                  id="user-menu"
+                  role="menu"
+                  aria-labelledby="user-menu-button"
+                  className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 invisible opacity-0 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 hover:visible hover:opacity-100 transition-all duration-150 border border-gray-200"
+                >
                   <Link
                     to="/profile"
-                    className="block px-4 py-2 text-gray-800 hover:bg-indigo-100"
+                    className="block px-4 py-2 text-gray-900 hover:bg-indigo-100 focus:bg-indigo-100 focus:outline-none"
+                    role="menuitem"
+                    tabIndex={0}
                   >
                     Profile
                   </Link>
                   <Link
                     to="/settings"
-                    className="block px-4 py-2 text-gray-800 hover:bg-indigo-100"
+                    className="block px-4 py-2 text-gray-900 hover:bg-indigo-100 focus:bg-indigo-100 focus:outline-none"
+                    role="menuitem"
+                    tabIndex={0}
                   >
                     Settings
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-indigo-100"
+                    className="block w-full text-left px-4 py-2 text-gray-900 hover:bg-indigo-100 focus:bg-indigo-100 focus:outline-none"
+                    role="menuitem"
+                    tabIndex={0}
                   >
                     Logout
                   </button>
