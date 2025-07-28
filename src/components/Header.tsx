@@ -1,24 +1,19 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 interface HeaderProps {
   isLoggedIn: boolean;
-  user?: {
-    name: string;
-    avatar?: string;
-  };
-  onLogout?: () => void;
 }
 
-const Header = ({ isLoggedIn, user, onLogout }: HeaderProps) => {
+const Header = ({ isLoggedIn }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    if (onLogout) {
-      onLogout();
-      navigate("/");
-    }
+    logout();
+    navigate("/");
   };
 
   return (
@@ -148,18 +143,6 @@ const Header = ({ isLoggedIn, user, onLogout }: HeaderProps) => {
           ) : (
             <>
               <Link
-                to="/features"
-                className="hover:text-dusty-coral transition-colors font-medium"
-              >
-                Features
-              </Link>
-              <Link
-                to="/pricing"
-                className="hover:text-dusty-coral transition-colors font-medium"
-              >
-                Pricing
-              </Link>
-              <Link
                 to="/about"
                 className="hover:text-dusty-coral transition-colors font-medium"
               >
@@ -214,18 +197,11 @@ const Header = ({ isLoggedIn, user, onLogout }: HeaderProps) => {
             {isLoggedIn ? (
               <>
                 <Link
-                  to="/dashboard"
+                  to="/"
                   className="hover:text-indigo-200 transition-colors font-medium"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Dashboard
-                </Link>
-                <Link
-                  to="/cats"
-                  className="hover:text-indigo-200 transition-colors font-medium"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  My Cats
                 </Link>
                 <Link
                   to="/activities"

@@ -44,22 +44,6 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/features"
-                  className="text-white hover:text-dusty-coral transition-colors"
-                >
-                  Features
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/pricing"
-                  className="text-white hover:text-dusty-coral transition-colors"
-                >
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link
                   to="/about"
                   className="text-white hover:text-dusty-coral transition-colors"
                 >
@@ -72,14 +56,6 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Resources</h3>
             <ul className="space-y-2">
-              <li>
-                <Link
-                  to="/blog"
-                  className="text-white hover:text-dusty-coral transition-colors"
-                >
-                  Blog
-                </Link>
-              </li>
               <li>
                 <Link
                   to="/resources/health-tips"

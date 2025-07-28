@@ -3,6 +3,7 @@ export interface User {
   name: string;
   email: string;
   password?: string; // For mock purposes only
+  avatar?: string;
 }
 
 export interface Cat {

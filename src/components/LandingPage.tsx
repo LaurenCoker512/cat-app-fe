@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -14,9 +14,7 @@ interface Cat {
 }
 
 const LandingPage = () => {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
+  const { user } = useAuth();
   // Dummy data for cats
   const dummyCats: Cat[] = [
     {
@@ -41,22 +39,9 @@ const LandingPage = () => {
     },
   ];
 
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
-
   return (
     <div className="min-h-screen flex flex-col bg-cream-white">
-      <Header
-        isLoggedIn={!!user}
-        user={
-          user
-            ? { name: user.name, avatar: "https://placekitten.com/200/200" }
-            : undefined
-        }
-        onLogout={handleLogout}
-      />
+      <Header isLoggedIn={!!user} />
 
       <main className="flex-grow" id="main-content" tabIndex={-1}>
         {!!user ? (

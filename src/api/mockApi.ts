@@ -9,12 +9,19 @@ import type {
 } from "./types";
 
 const users: User[] = [
-  { id: 1, name: "John Doe", email: "john@example.com", password: "cat123" },
+  {
+    id: 1,
+    name: "John Doe",
+    email: "john@example.com",
+    password: "cat123",
+    avatar: "https://placekitten.com/200/200",
+  },
   {
     id: 2,
     name: "Jane Smith",
     email: "jane@example.com",
     password: "meowmeow",
+    avatar: "https://placekitten.com/200/200",
   },
 ];
 

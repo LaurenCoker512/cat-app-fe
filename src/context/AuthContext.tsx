@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import type { AuthFormData, AuthResponse } from "../types/auth";
 
 interface AuthContextType {
-  user: null | { email: string; name: string };
+  user: null | { email: string; name: string; avatar?: string };
   token: string | null;
   login: (data: AuthFormData) => Promise<AuthResponse>;
   signup: (
