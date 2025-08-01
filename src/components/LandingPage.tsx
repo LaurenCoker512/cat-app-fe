@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Header from "./Header";
 import Footer from "./Footer";
+import Onboarding from "./Onboarding";
 
 interface Cat {
   id: string;
@@ -14,6 +16,7 @@ interface Cat {
 }
 
 const LandingPage = () => {
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState(true);
   const { user } = useAuth();
   // Dummy data for cats
   const dummyCats: Cat[] = [
@@ -39,9 +42,27 @@ const LandingPage = () => {
     },
   ];
 
+  const handleOnboardingSubmit = () => {
+    // Handle onboarding submission logic here
+    setIsOnboardingOpen(false);
+  };
+
+  const handleOnboardingClose = () => {
+    // Handle onboarding close logic here
+    setIsOnboardingOpen(false);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-cream-white">
       <Header isLoggedIn={!!user} />
+
+      {user && (
+        <Onboarding
+          open={isOnboardingOpen}
+          onSubmit={handleOnboardingSubmit}
+          onClose={handleOnboardingClose}
+        />
+      )}
 
       <main className="flex-grow" id="main-content" tabIndex={-1}>
         {!!user ? (

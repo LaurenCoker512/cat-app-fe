@@ -1,9 +1,6 @@
-// src/components/auth/Signup.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../../api";
 import { useAuth } from "../../context/AuthContext";
-import type { AuthFormData } from "../../types/auth";
 import { Link } from "react-router-dom";
 
 export default function Signup() {
@@ -30,6 +27,7 @@ export default function Signup() {
     try {
       const response = await signup(formData);
       if (response.success) {
+        localStorage.setItem("needsOnboarding", "true");
         navigate("/");
       } else {
         setError(response.message || "Signup failed");

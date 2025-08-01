@@ -88,6 +88,27 @@ const Footer = () => {
           <p className="text-white text-sm">
             © {new Date().getFullYear()} Purrfect Health. All rights reserved.
           </p>
+          <p className="text-white text-sm">
+            Made with ❤️ by{" "}
+            <a
+              href="https://github.com/isabellelow/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Isabelle Low
+            </a>{" "}
+            and{" "}
+            <a
+              href="https://github.com/LaurenCoker512"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Lauren Coker
+            </a>
+          </p>
+          <a href="https://www.flaticon.com/free-icons/cat" title="cat icon">
+            Cat icon created by Freepik - Flaticon
+          </a>
         </div>
       </div>
     </footer>
